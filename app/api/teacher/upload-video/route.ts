@@ -11,6 +11,7 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const file = formData.get("video") as File | null;
 
+    // check the file existence
     if (!file) {
       return NextResponse.json(
         { error: "No video file provided" },

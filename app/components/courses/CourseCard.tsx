@@ -31,7 +31,7 @@ const LEVEL_COLORS: Record<string, string> = {
 };
 
 export function CourseCard({ course, variant = "public" }: CourseCardProps) {
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();  // ✅ اضافه شد
   
   const LEVEL_LABELS: Record<string, string> = {
     BEGINNER: t('course.beginner'),
@@ -46,7 +46,7 @@ export function CourseCard({ course, variant = "public" }: CourseCardProps) {
     : `/dashboard/student/courses/${course.id}`;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group" dir={dir}>  {/* ✅ اضافه شد */}
       <Link href={href} className="block">
         <div className="relative w-full h-44 bg-gradient-to-br from-blue-100 to-purple-100">
           {course.thumbnailUrl ? (

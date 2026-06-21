@@ -31,7 +31,7 @@ export default function LoginPage() {
     setLoading(false)
 
     if (res?.error) {
-      setError(t('login.error'))
+      setError(t('loginPage.error'))
       return
     }
 
@@ -70,17 +70,17 @@ export default function LoginPage() {
             <span className="font-bold text-blue-600 text-lg">LinguaTest Pro</span>
           </div>
 
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('login.welcomeBack')}</h1>
-          <p className="text-gray-500 mb-8 text-sm">{t('login.signInMessage')}</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('loginPage.welcomeBack')}</h1>
+          <p className="text-gray-500 mb-8 text-sm">{t('loginPage.signInMessage')}</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">
-                {t('login.emailOrUsername')}
+                {t('loginPage.emailOrUsername')}
               </label>
               <input
                 type="text"
-                placeholder={t('login.emailPlaceholder')}
+                placeholder={t('loginPage.emailPlaceholder')}
                 value={identifier}
                 onChange={e => setIdentifier(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
@@ -90,12 +90,12 @@ export default function LoginPage() {
 
             <div>
               <label className="text-xs font-medium text-gray-600 mb-1 block">
-                {t('login.password')}
+                {t('loginPage.password')}
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={t('login.passwordPlaceholder')}
+                  placeholder={t('loginPage.passwordPlaceholder')}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black pr-10"
@@ -125,7 +125,7 @@ export default function LoginPage() {
               {loading ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  {t('login.signingIn')}
+                  {t('loginPage.signingIn')}
                 </>
               ) : (
                 t('loginPage.signIn')

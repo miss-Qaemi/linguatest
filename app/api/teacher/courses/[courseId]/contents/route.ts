@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import { withAuth } from "@/app/lib/auth";
+import { log } from "console";
 
 // GET: دریافت لیست محتواها
 export const GET = withAuth(
@@ -9,10 +10,16 @@ export const GET = withAuth(
       // 🟢 دریافت courseId
       const params = await context.params;
       const courseId = params.courseId;
+
+      console.log({params});
+      console.log({courseId})
       
       const course = await prisma.course.findFirst({
         where: { id: courseId, teacherId: user.id },
       });
+    
+      console.log("After: ")
+      console.log(course)
 
       if (!course) {
         return NextResponse.json({ error: "Course not found" }, { status: 404 });
@@ -22,6 +29,8 @@ export const GET = withAuth(
         where: { courseId: courseId },
         orderBy: { order: "asc" },
       });
+
+      console.log(contents)
 
       return NextResponse.json(contents);
     } catch (error) {

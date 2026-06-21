@@ -10,6 +10,7 @@ export const GET = withAuth(async (req: Request, context: any, user: any) => {
       orderBy: { createdAt: "desc" },
     });
 
+
     return NextResponse.json(
       courses.map((c) => ({
         id: c.id,
