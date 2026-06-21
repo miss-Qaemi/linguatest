@@ -56,51 +56,51 @@ enum ContentType {
 // ─── Models ────────────────────────────────────────────────────
 
 model User {
-  id            String        @id @default(cuid())
-  email         String        @unique
-  username      String        @unique
-  password      String
-  name          String?
-  bio           String?
-  role          Role          @default(STUDENT)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String?
+  bio       String?
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  teachingCourses  Course[]      @relation("TeacherCourses")
-  studentEnrollments Enrollment[] @relation("StudentEnrollments")
-  teachingEnrollments Enrollment[] @relation("TeacherEnrollments")
-  examSessions  ExamSession[]
-  notes         Note[]
-  payments      Payment[]
-  assignedExams Exam[]        @relation("ExamAssignedStudents")
-  examsCreated  Exam[]        @relation("TeacherExams")
-  savedResults SavedResult[] 
-  savedTips     TipSave[]      // ✅ اضافه شد - رابطه با TipSave
+  teachingCourses     Course[]      @relation("TeacherCourses")
+  studentEnrollments  Enrollment[]  @relation("StudentEnrollments")
+  teachingEnrollments Enrollment[]  @relation("TeacherEnrollments")
+  examSessions        ExamSession[]
+  notes               Note[]
+  payments            Payment[]
+  assignedExams       Exam[]        @relation("ExamAssignedStudents")
+  examsCreated        Exam[]        @relation("TeacherExams")
+  savedResults        SavedResult[]
+  savedTips           TipSave[] // ✅ اضافه شد - رابطه با TipSave
 
   @@map("users")
 }
 
 model Course {
-  id            String         @id @default(cuid())
+  id            String   @id @default(cuid())
   title         String
   description   String?
-  language      String         @default("English")
-  level         Level          @default(BEGINNER)
-  price         Float          @default(0)
-  isPublished   Boolean        @default(false)
-  autoEnroll    Boolean        @default(true)
+  language      String   @default("English")
+  level         Level    @default(BEGINNER)
+  price         Float    @default(0)
+  isPublished   Boolean  @default(false)
+  autoEnroll    Boolean  @default(true)
   promoVideoUrl String?
   thumbnailUrl  String?
-  materials     String?        // JSON String
+  materials     String? // JSON String
   teacherId     String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  teacher       User           @relation("TeacherCourses", fields: [teacherId], references: [id])
-  enrollments   Enrollment[]
-  contents      CourseContent[]
-  exams         Exam[]
-  payments      Payment[]
+  teacher     User            @relation("TeacherCourses", fields: [teacherId], references: [id])
+  enrollments Enrollment[]
+  contents    CourseContent[]
+  exams       Exam[]
+  payments    Payment[]
 
   @@map("courses")
 }
@@ -113,9 +113,9 @@ model Enrollment {
   createdAt DateTime @default(now())
   isPaid    Boolean  @default(false)
 
-  student   User     @relation("StudentEnrollments", fields: [studentId], references: [id])
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  teacher   User     @relation("TeacherEnrollments", fields: [teacherId], references: [id])
+  student User   @relation("StudentEnrollments", fields: [studentId], references: [id])
+  course  Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  teacher User   @relation("TeacherEnrollments", fields: [teacherId], references: [id])
 
   @@unique([studentId, courseId])
   @@map("enrollments")
@@ -130,28 +130,28 @@ model Payment {
   status    String   @default("PENDING")
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id])
-  course    Course   @relation(fields: [courseId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
 
   @@map("payments")
 }
 
 model Exam {
-  id               String        @id @default(cuid())
-  title            String
-  description      String?
-  duration         Int
-  startDate        DateTime
-  endDate          DateTime
-  level            String        @default("MEDIUM")
-  audioUrl         String?
-  passageText      String?
-  isPublic         Boolean       @default(true)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  duration    Int
+  startDate   DateTime
+  endDate     DateTime
+  level       String   @default("MEDIUM")
+  audioUrl    String?
+  passageText String?
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  courseId         String?
-  teacherId        String?
+  courseId  String?
+  teacherId String?
 
   course           Course?       @relation(fields: [courseId], references: [id], onDelete: Cascade)
   teacher          User?         @relation("TeacherExams", fields: [teacherId], references: [id])
@@ -167,7 +167,7 @@ model Question {
   examId        String
   questionText  String
   type          QuestionType @default(MULTIPLE_CHOICE)
-  options       String?      // JSON String
+  options       String? // JSON String
   correctAnswer String
   section       String       @default("general")
   order         Int          @default(0)
@@ -175,8 +175,8 @@ model Question {
   explanation   String?
   createdAt     DateTime     @default(now())
 
-  exam          Exam         @relation(fields: [examId], references: [id], onDelete: Cascade)
-  answers       Answer[]
+  exam    Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  answers Answer[]
 
   @@map("questions")
 }
@@ -192,23 +192,23 @@ model ExamSession {
   totalQuestions Int?
   status         SessionStatus @default(IN_PROGRESS)
 
-  student        User          @relation(fields: [studentId], references: [id])
-  exam           Exam          @relation(fields: [examId], references: [id], onDelete: Cascade)
-  answers        Answer[]
+  student User     @relation(fields: [studentId], references: [id])
+  exam    Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  answers Answer[]
 
   @@map("exam_sessions")
 }
 
 model Answer {
-  id             String      @id @default(cuid())
+  id             String   @id @default(cuid())
   sessionId      String
   questionId     String
   selectedOption String?
-  isCorrect      Boolean     @default(false)
-  createdAt      DateTime    @default(now())
+  isCorrect      Boolean  @default(false)
+  createdAt      DateTime @default(now())
 
-  session        ExamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  question       Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  session  ExamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  question Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@unique([sessionId, questionId])
   @@map("answers")
@@ -221,33 +221,34 @@ model Note {
   content   String
   createdAt DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
   @@map("notes")
 }
 
 model CourseContent {
-  id        String      @id @default(cuid())
-  courseId  String
-  title     String
-  type      ContentType
-  url       String?     // برای VIDEO و FILE
-  text      String?     // برای TEXT
-  order     Int         @default(0)
-  isFree    Boolean     @default(false)
+  id       String      @id @default(cuid())
+  courseId String
+  title    String
+  type     ContentType
+  url      String? // برای VIDEO و FILE
+  text     String? // برای TEXT
+  order    Int         @default(0)
+  isFree   Boolean     @default(false)
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  course    Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@index([courseId])
   @@map("course_contents")
 }
+
 // مدل سوالات آزمون تعیین سطح
 model PlacementQuestion {
   id            String   @id @default(cuid())
-  testId        String   // شناسه آزمون (مثلاً "placement_main")
+  testId        String // شناسه آزمون (مثلاً "placement_main")
   questionText  String
   optionA       String
   optionB       String
@@ -259,29 +260,31 @@ model PlacementQuestion {
 
   @@map("placement_questions")
 }
+
 model DailyTip {
-  id        String   @id @default(cuid())
-  content   String   // @db.Text رو حذف کردیم چون SQLite پشتیبانی نمی‌کنه
-  date      DateTime @unique @default(now())
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  content   String // @db.Text رو حذف کردیم چون SQLite پشتیبانی نمی‌کنه
+  date      DateTime  @unique @default(now())
+  createdAt DateTime  @default(now())
   saves     TipSave[]
 
   @@map("daily_tips")
 }
 
 model TipSave {
-  id        String   @id @default(cuid())
-  userId    String
-  tipId     String
-  savedAt   DateTime @default(now())
-  note      String?  // @db.Text رو حذف کردیم
+  id      String   @id @default(cuid())
+  userId  String
+  tipId   String
+  savedAt DateTime @default(now())
+  note    String? // @db.Text رو حذف کردیم
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tip       DailyTip @relation(fields: [tipId], references: [id], onDelete: Cascade)
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tip  DailyTip @relation(fields: [tipId], references: [id], onDelete: Cascade)
 
   @@unique([userId, tipId])
   @@map("tip_saves")
 }
+
 // به انتهای فایل schema.prisma اضافه کن
 model SavedResult {
   id             String   @id @default(cuid())
@@ -292,10 +295,10 @@ model SavedResult {
   totalCorrect   Int
   totalQuestions Int
   completedAt    DateTime
-  answers        String   // JSON string
+  answers        String // JSON string
   createdAt      DateTime @default(now())
 
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, examId])
   @@map("saved_results")
