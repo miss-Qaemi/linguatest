@@ -9,23 +9,32 @@ import { useLanguage } from "@/app/context/LanguageContext";
 export function DailyTip() {
   const { data: session } = useSession();
   const router = useRouter();
-  const { t, dir } = useLanguage();
+  const { t, language, dir } = useLanguage();
   const [tip, setTip] = useState<{ id?: string; content: string; date: string; isSaved: boolean } | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  // ✅ وقتی زبان تغییر کرد، دوباره از API بخوان
   useEffect(() => {
     fetchTip();
-  }, []);
+  }, [language]);
 
   const fetchTip = async () => {
     try {
-      const res = await fetch('/api/daily-tip');
+      setLoading(true);
+      // ✅ زبان را به API ارسال کن
+      const res = await fetch(`/api/daily-tip?lang=${language}`);
       const data = await res.json();
-      setTip(data);
+      
+      setTip({
+        id: data?.id,
+        content: data?.content || "No tip available",
+        date: data?.date || new Date().toISOString(),
+        isSaved: data?.isSaved || false,
+      });
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error fetching tip:", error);
     } finally {
       setLoading(false);
     }
@@ -44,7 +53,11 @@ export function DailyTip() {
       const res = await fetch('/api/daily-tip', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tipId: tip.id })
+        body: JSON.stringify({ 
+          content: tip.content,
+          date: tip.date,
+          lang: language  // ✅ زبان را هم ارسال کن
+        })
       });
 
       if (res.ok) {
@@ -80,22 +93,25 @@ export function DailyTip() {
 
       if (res.ok) {
         setTip(prev => prev ? { ...prev, isSaved: false } : null);
-        alert(t('dailyTip.deleteSuccess'));
-      } else {
-        alert(t('dailyTip.deleteError'));
       }
     } catch (error) {
       console.error("Error deleting:", error);
-      alert(t('dailyTip.deleteError'));
     } finally {
       setDeleting(false);
     }
   };
 
+  // ✅ فرمت تاریخ بر اساس زبان
   const formatDate = (dateStr: string) => {
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString('fa-IR', { 
+      const locales: Record<string, string> = {
+        fa: 'fa-IR',
+        en: 'en-US',
+        de: 'de-DE',
+      };
+      
+      return date.toLocaleDateString(locales[language] || 'fa-IR', { 
         year: 'numeric', 
         month: 'long', 
         day: 'numeric' 

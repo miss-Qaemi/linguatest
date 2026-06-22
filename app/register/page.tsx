@@ -32,12 +32,12 @@ export default function RegisterPage() {
     setError('')
 
     if (form.password !== form.confirmPassword) {
-      setError(t('register.passwordMismatch'))
+      setError(t('registerPage.passwordMismatch'))
       return
     }
 
     if (form.password.length < 6) {
-      setError(t('register.passwordMinLength'))
+      setError(t('registerPage.passwordMinLength'))
       return
     }
 
@@ -59,7 +59,7 @@ export default function RegisterPage() {
       const data = await res.json()
 
       if (!res.ok) {
-        setError(data.error ?? t('register.error'))
+        setError(data.error ?? t('registerPage.error'))
         setLoading(false)
         return
       }
@@ -83,7 +83,7 @@ export default function RegisterPage() {
       }
     } catch (error) {
       console.error('Register error:', error)
-      setError(t(' registerPage.serverError'))
+      setError(t('registerPage.serverError'))
     } finally {
       setLoading(false)
     }
@@ -97,18 +97,18 @@ export default function RegisterPage() {
           <div className="w-24 h-24 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-6">
             <BookOpen size={48} className="text-white" />
           </div>
-          <h2 className="text-3xl font-bold mb-3">{t(' registerPage.joinTitle')}</h2>
+          <h2 className="text-3xl font-bold mb-3">{t('registerPage.joinTitle')}</h2>
           <p className="text-blue-200 text-sm leading-relaxed max-w-xs">
-            {t(' registerPage.joinDescription')}
+            {t('registerPage.joinDescription')}
           </p>
           <div className="mt-8 grid grid-cols-2 gap-4 text-sm">
             <div className="bg-white/10 rounded-xl p-4">
               <p className="text-2xl font-bold">500+</p>
-              <p className="text-blue-200">{t(' registerPage.examsCount')}</p>
+              <p className="text-blue-200">{t('registerPage.examsCount')}</p>
             </div>
             <div className="bg-white/10 rounded-xl p-4">
               <p className="text-2xl font-bold">10k+</p>
-              <p className="text-blue-200">{t(' registerPage.studentsCount')}</p>
+              <p className="text-blue-200">{t('registerPage.studentsCount')}</p>
             </div>
           </div>
         </div>
@@ -125,8 +125,8 @@ export default function RegisterPage() {
             <span className="font-bold text-blue-600 text-lg">LinguaTest Pro</span>
           </Link>
 
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t(' registerPage.createAccount')}</h1>
-          <p className="text-gray-500 mb-6 text-sm">{t(' registerPage.fillDetails')}</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{t('registerPage.createAccount')}</h1>
+          <p className="text-gray-500 mb-6 text-sm">{t('registerPage.fillDetails')}</p>
 
           {/* Role Selector */}
           <div className="flex rounded-lg border border-gray-200 p-1 mb-6 gap-1">
@@ -139,7 +139,7 @@ export default function RegisterPage() {
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
-              <BookOpen size={15} /> {t(' registerPage.student')}
+              <BookOpen size={15} /> {t('registerPage.student')}
             </button>
             <button
               type="button"
@@ -150,17 +150,17 @@ export default function RegisterPage() {
                   : 'text-gray-600 hover:bg-gray-50'
               }`}
             >
-              <Monitor size={15} /> {t(' registerPage.teacher')}
+              <Monitor size={15} /> {t('registerPage.teacher')}
             </button>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">{t(' registerPage.fullName')}</label>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('registerPage.fullName')}</label>
               <input
                 name="name"
                 type="text"
-                placeholder={t(' registerPage.fullNamePlaceholder')}
+                placeholder={t('registerPage.fullNamePlaceholder')}
                 value={form.name}
                 onChange={handleChange}
                 className="w-full border text-black border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -169,11 +169,11 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">{t(' registerPage.username')}</label>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('registerPage.username')}</label>
               <input
                 name="username"
                 type="text"
-                placeholder={t(' registerPage.usernamePlaceholder')}
+                placeholder={t('registerPage.usernamePlaceholder')}
                 value={form.username}
                 onChange={handleChange}
                 className="w-full border text-black border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -182,11 +182,11 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('register.email')}</label>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('registerPage.email')}</label>
               <input
                 name="email"
                 type="email"
-                placeholder={t('register.emailPlaceholder')}
+                placeholder={t('registerPage.emailPlaceholder')}
                 value={form.email}
                 onChange={handleChange}
                 className="w-full border text-black border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -195,12 +195,12 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('register.password')}</label>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('registerPage.password')}</label>
               <div className="relative">
                 <input
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={t('register.passwordPlaceholder')}
+                  placeholder={t('registerPage.passwordPlaceholder')}
                   value={form.password}
                   onChange={handleChange}
                   className="w-full border text-black border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
@@ -218,11 +218,11 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('register.confirmPassword')}</label>
+              <label className="text-xs font-medium text-gray-600 mb-1 block">{t('registerPage.confirmPassword')}</label>
               <input
                 name="confirmPassword"
                 type="password"
-                placeholder={t('register.confirmPasswordPlaceholder')}
+                placeholder={t('registerPage.confirmPasswordPlaceholder')}
                 value={form.confirmPassword}
                 onChange={handleChange}
                 className="w-full border text-black border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -244,18 +244,18 @@ export default function RegisterPage() {
               {loading ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  {t('register.creating')}
+                  {t('registerPage.creating')}
                 </>
               ) : (
-                t('register.createButton')
+                t('registerPage.createButton')
               )}
             </button>
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
-            {t('register.haveAccount')}{' '}
+            {t('registerPage.haveAccount')}{' '}
             <Link href="/login" className="text-blue-600 hover:underline font-medium">
-              {t('register.signIn')}
+              {t('registerPage.signIn')}
             </Link>
           </p>
         </div>

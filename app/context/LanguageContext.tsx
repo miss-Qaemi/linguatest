@@ -14,7 +14,7 @@ interface LanguageContextType {
 // ترجمه‌های کامل - یکدست شده (بدون تکرار)
 const translations: Record<Language, any> = {
   fa: {
-    home: 'خانه',
+    
     dashboard: 'داشبورد',
     courses: 'دوره‌ها',
     exams: 'آزمون‌ها',
@@ -163,20 +163,55 @@ const translations: Record<Language, any> = {
       allLanguages: 'همه زبان‌ها',
     },
 
-    loginPage: {
-      welcomeBack: 'خوش آمدید',
-      signInMessage: 'به حساب کاربری خود وارد شوید',
-      emailOrUsername: 'ایمیل یا نام کاربری',
-      emailPlaceholder: 'ایمیل یا نام کاربری خود را وارد کنید',
-      password: 'رمز عبور',
-      passwordPlaceholder: 'رمز عبور خود را وارد کنید',
-      signIn: 'ورود',
-      signingIn: 'در حال ورود...',
-      noAccount: 'حساب کاربری ندارید؟',
-      createAccount: 'ثبت‌نام',
-      error: 'ایمیل/نام کاربری یا رمز عبور اشتباه است',
-      tagline: 'پلتفرم جامع شما برای آزمون زبان و ارزیابی یادگیری',
+   loginPage: {
+  welcomeBack: 'خوش آمدید',
+  signInMessage: 'به حساب کاربری خود وارد شوید',
+  emailOrUsername: 'ایمیل یا نام کاربری',
+  emailPlaceholder: 'ایمیل یا نام کاربری خود را وارد کنید',
+  password: 'رمز عبور',
+  passwordPlaceholder: 'رمز عبور خود را وارد کنید',
+  signIn: 'ورود',
+  signingIn: 'در حال ورود...',
+  noAccount: 'حساب کاربری ندارید؟',
+  createAccount: 'ثبت‌نام',
+  error: 'ایمیل/نام کاربری یا رمز عبور اشتباه است',
+  tagline: 'پلتفرم جامع شما برای آزمون زبان و ارزیابی یادگیری',
+},
+
+// ✅ اینجا اضافه کنید:
+home: {
+  hero: {
+    title: 'به LinguaTest خوش آمدید',
+    subtitle: 'پلتفرم جامع شما برای یادگیری و آزمون زبان. گرامر، شنیداری و خواندن را تمرین کنید، نکات روزانه بگیرید و پیشرفت خود را پیگیری کنید.',
+    startPlacement: 'شروع آزمون تعیین سطح',
+    createAccount: 'ایجاد حساب کاربری',
+    login: 'ورود',
+  },
+  examCategories: {
+    title: 'دسته‌بندی آزمون‌ها',
+    grammar: {
+      title: 'آزمون گرامر',
+      desc: 'توانایی خود را در بیان واضح و صحیح ایده‌ها در زبان هدف بسنجید.',
     },
+    listening: {
+      title: 'آزمون شنیداری',
+      desc: 'درک خود را با مواد شنیداری متنوع بهبود بخشید.',
+    },
+    reading: {
+      title: 'آزمون خواندن',
+      desc: 'سرعت و حفظ مطلب خود را افزایش دهید.',
+    },
+    startTest: 'شروع آزمون',
+  },
+  popularCourses: {
+    title: 'دوره‌های محبوب',
+    subtitle: 'با محبوب‌ترین دوره‌های ما، که توسط اساتید خبره تدریس می‌شوند، یادگیری را شروع کنید',
+    noCourses: 'هنوز دوره‌ای موجود نیست',
+    viewCourse: 'مشاهده دوره',
+    seeAll: 'مشاهده همه دوره‌ها',
+    by: 'توسط',
+  },
+},
 
     registerPage: {
       passwordMismatch: 'رمز عبور و تکرار آن یکسان نیستند',
@@ -449,7 +484,40 @@ const translations: Record<Language, any> = {
   },
 
   en: {
-    home: 'Home',
+    home: {
+  hero: {
+    title: 'Master New Languages, Ace Every Test with LinguaTest',
+    subtitle: 'Your comprehensive platform for language learning and testing. Practice grammar, listening, and reading skills, get daily tips, and track your progress.',
+    startPlacement: 'Start Placement Test',
+    createAccount: 'Create Account',
+    login: 'Log In',
+  },
+  examCategories: {
+    title: 'Explore Our Exam Categories',
+    grammar: {
+      title: 'Grammar Test',
+      desc: 'Assess your ability to express ideas clearly and correctly in a target language.',
+    },
+    listening: {
+      title: 'Listening Test',
+      desc: 'Improve your comprehension with diverse audio materials.',
+    },
+    reading: {
+      title: 'Reading Test',
+      desc: 'Enhance your reading speed and retention.',
+    },
+    startTest: 'Start Test',
+  },
+  popularCourses: {
+    title: 'Popular Courses',
+    subtitle: 'Start learning with our most popular courses, taught by expert instructors',
+    noCourses: 'No courses available yet.',
+    viewCourse: 'View Course',
+    seeAll: 'See All Courses',
+    by: 'by',
+  },
+},
+
     dashboard: 'Dashboard',
     courses: 'Courses',
     exams: 'Exams',
@@ -884,7 +952,41 @@ const translations: Record<Language, any> = {
   },
 
   de: {
-    home: 'Startseite',
+    
+    
+home: {
+  hero: {
+    title: 'Neue Sprachen meistern, Jeden Test bestehen mit LinguaTest',
+    subtitle: 'Ihre umfassende Plattform für Sprachlernen und Tests. Üben Sie Grammatik, Hörverstehen und Lesefähigkeiten, erhalten Sie tägliche Tipps und verfolgen Sie Ihren Fortschritt.',
+    startPlacement: 'Einstufungstest starten',
+    createAccount: 'Konto erstellen',
+    login: 'Anmelden',
+  },
+  examCategories: {
+    title: 'Entdecken Sie unsere Prüfungskategorien',
+    grammar: {
+      title: 'Grammatiktest',
+      desc: 'Bewerten Sie Ihre Fähigkeit, Ideen klar und korrekt in einer Zielsprache auszudrücken.',
+    },
+    listening: {
+      title: 'Hörverständnistest',
+      desc: 'Verbessern Sie Ihr Verständnis mit vielfältigen Audiomaterialien.',
+    },
+    reading: {
+      title: 'Lesetest',
+      desc: 'Verbessern Sie Ihre Lesegeschwindigkeit und Ihr Behalten.',
+    },
+    startTest: 'Test starten',
+  },
+  popularCourses: {
+    title: 'Beliebte Kurse',
+    subtitle: 'Beginnen Sie das Lernen mit unseren beliebtesten Kursen, die von erfahrenen Dozenten unterrichtet werden',
+    noCourses: 'Noch keine Kurse verfügbar.',
+    viewCourse: 'Kurs ansehen',
+    seeAll: 'Alle Kurse anzeigen',
+    by: 'von',
+  },
+},
     dashboard: 'Dashboard',
     courses: 'Kurse',
     exams: 'Prüfungen',
