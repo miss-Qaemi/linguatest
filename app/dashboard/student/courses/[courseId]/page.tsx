@@ -156,13 +156,22 @@ export default function StudentCourseContentPage() {
                       🔒 {t('course.lockedPaymentRequired')}
                     </div>
                   ) : c.type === "VIDEO" && c.url ? (
-                    <video src={c.url} controls className="w-full mt-3 rounded-lg" />
+                    <video 
+                      src={c.url} 
+                      controls 
+                      className="w-full mt-3 rounded-lg bg-black"
+                      onError={(e) => {
+                        console.error("❌ Video loading error:", c.url);
+                        console.error("Event:", e);
+                      }}
+                      onLoadStart={() => console.log("✅ Video loading started:", c.url)}
+                    />
                   ) : c.type === "FILE" && c.url ? (
-                    <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline text-sm mt-2 block">
+                    <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline text-sm mt-2 block hover:text-blue-800">
                       📥 {t('course.downloadFile')}
                     </a>
                   ) : c.type === "TEXT" && c.text ? (
-                    <div className="mt-3 p-3 bg-gray-50 rounded-lg text-gray-700 text-sm leading-relaxed">
+                    <div className="mt-3 p-3 bg-gray-50 rounded-lg text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">
                       {c.text}
                     </div>
                   ) : null}
