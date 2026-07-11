@@ -21,7 +21,7 @@ export function Header() {
         <div className="flex items-center gap-6">
           <nav className="hidden md:flex items-center gap-6 text-sm text-gray-600 font-medium">
             <Link href="/" className="hover:text-blue-600 transition flex items-center gap-1">
-              <Home size={15} /> {t('home')}
+              <Home size={15} /> {t('Home')}
             </Link>
             <Link href="/courses" className="hover:text-blue-600 transition flex items-center gap-1">
               <BookOpen size={15} /> {t('courses')}

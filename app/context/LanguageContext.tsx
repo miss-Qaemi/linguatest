@@ -177,9 +177,10 @@ const translations: Record<Language, any> = {
   error: 'ایمیل/نام کاربری یا رمز عبور اشتباه است',
   tagline: 'پلتفرم جامع شما برای آزمون زبان و ارزیابی یادگیری',
 },
-
+Home:'خانه',
 // ✅ اینجا اضافه کنید:
 home: {
+  
   hero: {
     title: 'به LinguaTest خوش آمدید',
     subtitle: 'پلتفرم جامع شما برای یادگیری و آزمون زبان. گرامر، شنیداری و خواندن را تمرین کنید، نکات روزانه بگیرید و پیشرفت خود را پیگیری کنید.',
@@ -953,7 +954,7 @@ home: {
 
   de: {
     
-    
+    Home:'Haus',
 home: {
   hero: {
     title: 'Neue Sprachen meistern, Jeden Test bestehen mit LinguaTest',

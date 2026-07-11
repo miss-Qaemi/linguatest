@@ -144,19 +144,23 @@ export default function ManageCoursePage() {
     }
   };
 
+  // ✅ FIXED: Delete content by sending contentId in the request body
   const handleDeleteContent = async (id: string) => {
     if (!confirm(t('course.confirmDeleteContent'))) return;
 
     try {
-      const res = await fetch(`/api/teacher/courses/${courseId}/contents/${id}`, {
+      const res = await fetch(`/api/teacher/courses/${courseId}/contents`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contentId: id }),
       });
 
       if (res.ok) {
         loadData();
+        alert(t('course.contentDeleted') || 'محتوا با موفقیت حذف شد');
       } else {
-        const errorData = await res.json();
-        alert(errorData.error || t('course.contentDeleteError'));
+        const data = await res.json();
+        alert(data.error || t('course.contentDeleteError'));
       }
     } catch {
       alert(t('course.contentDeleteError'));
@@ -444,6 +448,7 @@ export default function ManageCoursePage() {
                 value={course.promoVideoUrl || ""}
                 onChange={(e) => setCourse({ ...course, promoVideoUrl: e.target.value })}
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="C:/MyVideos/video.mp4"
               />
             </div>
           </div>
@@ -495,7 +500,7 @@ export default function ManageCoursePage() {
               <input
                 value={form.url}
                 onChange={(e) => setForm({ ...form, url: e.target.value })}
-                placeholder={t('course.fileUrl')}
+                placeholder="C:/MyVideos/video.mp4"
                 className="border rounded-lg px-4 py-2"
               />
             )}

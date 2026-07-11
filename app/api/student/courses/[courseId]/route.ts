@@ -1,17 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 import { withAuth } from "@/app/lib/auth";
+import path from "path";
 
 export const GET = withAuth(
   async (req: Request, context: any, user: any) => {
     try {
-      // 🟢 اصلاح مهم: دریافت params از context
       const params = await context.params;
       const courseId = params.courseId;
-      
-      console.log("Fetching student course content:", courseId);
-      console.log("Student ID:", user.id);
-      
+
       if (!courseId) {
         return NextResponse.json(
           { error: "Course ID is required" },
@@ -19,7 +16,7 @@ export const GET = withAuth(
         );
       }
 
-      // دریافت اطلاعات کورس
+      // ✅ Include promoVideoUrl in the select
       const course = await prisma.course.findUnique({
         where: { id: courseId },
         select: { 
@@ -27,7 +24,8 @@ export const GET = withAuth(
           title: true, 
           description: true, 
           isPublished: true,
-          price: true
+          price: true,
+          promoVideoUrl: true, // ✅ Added
         },
       });
 
@@ -35,7 +33,6 @@ export const GET = withAuth(
         return NextResponse.json({ error: "Course not found" }, { status: 404 });
       }
 
-      // بررسی ثبت‌نام دانشجو
       const enrollment = await prisma.enrollment.findUnique({
         where: {
           studentId_courseId: { studentId: user.id, courseId: courseId },
@@ -49,7 +46,7 @@ export const GET = withAuth(
         );
       }
 
-      // دریافت محتوای کورس
+      // Get course contents
       const contents = await prisma.courseContent.findMany({
         where: { courseId: courseId },
         orderBy: { order: "asc" },
@@ -57,6 +54,7 @@ export const GET = withAuth(
 
       const isPaid = enrollment.isPaid ?? false;
 
+      // ✅ Build content list with proper video URLs
       const safeContents = contents.map((c) => ({
         id: c.id,
         title: c.title,
@@ -64,19 +62,49 @@ export const GET = withAuth(
         order: c.order,
         isFree: c.isFree,
         locked: !(c.isFree || isPaid),
-        url: c.isFree || isPaid ? c.url : "",
+        url: (c.isFree || isPaid) && c.url && c.type === "VIDEO" 
+          ? `/api/uploads/videos/${path.basename(c.url)}` 
+          : (c.isFree || isPaid) && c.url 
+            ? c.url 
+            : "",
         text: c.isFree || isPaid ? c.text : null,
       }));
 
-      console.log("Content count:", contents.length);
-      
+      // ✅ If there's a promo video and it's not already in contents, add it as the first item
+      let finalContents = safeContents;
+      if (course.promoVideoUrl) {
+        // Check if promo video is already in contents (by matching the filename)
+        const promoFilename = path.basename(course.promoVideoUrl);
+        const alreadyExists = safeContents.some(
+          (c) => c.type === "VIDEO" && c.url && path.basename(c.url) === promoFilename
+        );
+
+        if (!alreadyExists) {
+          // ✅ Add promo video as the first content item (free)
+          finalContents = [
+            {
+              id: "promo-video",
+              title: "🎬 ویدئوی معرفی دوره",
+              type: "VIDEO" as const,
+              order: 0,
+              isFree: true,
+              locked: false,
+              url: `/api/uploads/videos/${promoFilename}`,
+              text: null,
+            },
+            ...safeContents,
+          ];
+        }
+      }
+
       return NextResponse.json({
         course: { 
           id: course.id, 
           title: course.title, 
-          description: course.description 
+          description: course.description,
+          promoVideoUrl: course.promoVideoUrl, // ✅ Include in response
         },
-        contents: safeContents,
+        contents: finalContents,
         isPaid,
       });
       

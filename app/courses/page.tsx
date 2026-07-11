@@ -53,15 +53,15 @@ export default function CoursesPage() {
 
   const languages = ["ALL", ...Array.from(new Set(courses.map((c) => c.language).filter(Boolean)))];
 
-  // نگاشت سطوح برای نمایش
+  // ✅ نگاشت سطوح برای نمایش (استفاده از coursesPage)
   const getLevelLabel = (level: string): string => {
     const levelMap: Record<string, string> = {
-      "ALL": t('courses.allLevels'),
-      "BEGINNER": t('courses.beginner'),
-      "ELEMENTARY": t('courses.elementary'),
-      "INTERMEDIATE": t('courses.intermediate'),
-      "UPPER_INTERMEDIATE": t('courses.upperIntermediate'),
-      "ADVANCED": t('courses.advanced'),
+      "ALL": t('coursesPage.allLevels'),
+      "BEGINNER": t('coursesPage.beginner'),
+      "ELEMENTARY": t('coursesPage.elementary'),
+      "INTERMEDIATE": t('coursesPage.intermediate'),
+      "UPPER_INTERMEDIATE": t('coursesPage.upperIntermediate'),
+      "ADVANCED": t('coursesPage.advanced'),
     };
     return levelMap[level] || level;
   };
@@ -72,9 +72,9 @@ export default function CoursesPage() {
 
       <div className="bg-gradient-to-br from-blue-600 to-blue-800 text-white py-14">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-3">{t('courses.title')}</h1>
+          <h1 className="text-3xl md:text-4xl font-extrabold mb-3">{t('coursesPage.title')}</h1>
           <p className="text-blue-100 text-base mb-8 max-w-xl mx-auto">
-            {t('courses.subtitle')}
+            {t('coursesPage.subtitle')}
           </p>
 
           <div className="max-w-lg mx-auto relative">
@@ -82,7 +82,7 @@ export default function CoursesPage() {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder={t('courses.searchPlaceholder')}
+              placeholder={t('coursesPage.searchPlaceholder')}
               className="w-full pr-10 pl-4 py-3 rounded-xl text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-lg"
             />
           </div>
@@ -92,7 +92,7 @@ export default function CoursesPage() {
       <main className="max-w-6xl mx-auto px-6 py-10">
         <div className="flex flex-wrap items-center gap-3 mb-8">
           <div className="flex items-center gap-1.5 text-sm text-gray-500">
-            <Filter size={14} /> {t('courses.filter')}:
+            <Filter size={14} /> {t('coursesPage.filter')}:
           </div>
 
           <div className="flex flex-wrap gap-2">
@@ -117,13 +117,13 @@ export default function CoursesPage() {
             className="border border-gray-200 rounded-xl px-3 py-1.5 text-xs text-gray-700 bg-white focus:outline-none mr-auto"
           >
             {languages.map((l) => (
-              <option key={l} value={l}>{l === "ALL" ? t('courses.allLanguages') : l}</option>
+              <option key={l} value={l}>{l === "ALL" ? t('coursesPage.allLanguages') : l}</option>
             ))}
           </select>
         </div>
 
         <p className="text-sm text-gray-400 mb-6">
-          {t('courses.showing')} <strong className="text-gray-700">{filtered.length}</strong> {t('courses.courses')}
+          {t('coursesPage.showing')} <strong className="text-gray-700">{filtered.length}</strong> {t('coursesPage.courses')}
         </p>
 
         {loading ? (
@@ -133,7 +133,7 @@ export default function CoursesPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
             <BookOpen size={40} className="mx-auto text-gray-300 mb-4" />
-            <p className="text-gray-500 text-sm">{t('courses.noCoursesFound')}</p>
+            <p className="text-gray-500 text-sm">{t('coursesPage.noCoursesFound')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

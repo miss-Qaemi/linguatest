@@ -26,6 +26,13 @@ interface Course {
   teacher: { id: string; name: string | null; email: string };
   contents: Content[];
   _count?: { enrollments: number };
+  promoVideoUrl?: string; // ✅ Added
+}
+
+// Helper: extract filename from a full path (supports both / and \)
+function getFilenameFromPath(path: string): string {
+  const parts = path.split(/[\\/]/);
+  return parts[parts.length - 1];
 }
 
 export default function CourseDetailPage() {
@@ -157,14 +164,31 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50" dir={dir}>
-      {/* هدر حذف شد - از layout اصلی می‌آید */}
-
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-sm p-8 mb-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">{course.title}</h1>
 
           {course.description && (
             <p className="text-gray-600 text-lg mb-6 leading-relaxed">{course.description}</p>
+          )}
+
+          {/* ✅ Show promo video if available */}
+          {course.promoVideoUrl && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                🎬 {t('course.promoVideo') || 'ویدئوی معرفی'}
+              </h3>
+              <video
+                src={`/api/uploads/videos/${getFilenameFromPath(course.promoVideoUrl)}`}
+                controls
+                className="w-full rounded-lg max-h-[500px] bg-black"
+                controlsList="nodownload"
+              >
+                <p className="text-red-500 text-sm p-4 text-center">
+                  {t('course.videoNotSupported') || 'مرورگر شما از پخش این ویدئو پشتیبانی نمی‌کند.'}
+                </p>
+              </video>
+            </div>
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
@@ -250,8 +274,6 @@ export default function CourseDetailPage() {
   );
 }
 
-// تابع کمکی برای فرمت تاریخ بر اساس زبان
 function faIRLocale() {
-  // می‌توانید بر اساس زبان کاربر تاریخ را فرمت کنید
   return 'fa-IR';
 }
